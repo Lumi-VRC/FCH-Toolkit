@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCH Toolkit</title>
+  <!-- Import Poppins and Grechen Fuemen fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Grechen+Fuemen&display=swap" rel="stylesheet">
+  <style>
+    /* Reset and base styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      scroll-behavior: smooth;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+    }
+    a, button {
+      -webkit-user-select: text;
+         -moz-user-select: text;
+          -ms-user-select: text;
+              user-select: text;
+    }
+    /* Header Styles */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 0 20px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+    }
+    header .logo img {
+      height: 40px;
+      border-radius: 50%;
+    }
+    nav.nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    nav.nav-buttons a {
+      color: #e0e0e0;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    nav.nav-buttons a:hover {
+      background-color: #444;
+    }
+    .login-container {
+      margin-right: 40px;
+    }
+    .login-button {
+      background-color: #ffb6c1;
+      border: none;
+      color: #121212;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .login-button:hover {
+      background-color: #ff9db1;
+    }
+    /* Space for fixed header */
+    .header-offset {
+      height: 60px;
+    }
+    /* Hero Section (Front Page) using Flexbox */
+    .hero {
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      background: url('media/icon3.png') no-repeat center center/cover;
+      background-attachment: fixed;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+    /* Front page text container that spans full height */
+    .text-container {
+      position: relative;
+      z-index: 2;
+      margin-left: 10%;
+      width: 30%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .text-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      z-index: -1;
+    }
+    /* Fixed pixel font sizes for hero text */
+    .text-container h1 {
+      font-family: 'Grechen Fuemen', fantasy;
+      font-size: 150px;
+      margin: 0;
+      color: #ffb6c1;
+      text-align: center;
+      text-shadow: 
+         -2px -2px 0 white,
+          2px -2px 0 white,
+         -2px  2px 0 white,
+          2px  2px 0 white,
+         -4px -4px 0 black,
+          4px -4px 0 black,
+         -4px  4px 0 black,
+          4px  4px 0 black;
+    }
+    .text-container h3 {
+      font-family: 'Grechen Fuemen', fantasy;
+      font-size: 30px;
+      margin-top: 10px;
+      text-align: center;
+      color: #ffffff;
+    }
+    /* Divider Bar (60px high) */
+    .divider {
+      background-color: #1e1e1e;
+      height: 60px;
+      width: 100%;
+    }
+    /* Section Container for FAQ/Features (Flexbox layout) */
+    .section-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .section-container > .divider {
+      flex: 0 0 60px;
+    }
+    .section-container > .content-area {
+      flex: 1;
+      position: relative;
+    }
+    /* Fixed Background Container for FAQ and Features */
+    .fixed-bg {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      background-attachment: fixed;
+    }
+    /* FAQ Background */
+    .faq-bg {
+      background: url('media/faq-bg.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+    }
+    /* Features Background */
+    .features-bg {
+      background: url('media/features-bg.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+    }
+    /* Overlay for FAQ and Features - heavy blur (20px) */
+    .fixed-bg::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(20px);
+      z-index: -1;
+    }
+    /* Inner content box: same column as front page */
+    .inner-box {
+      width: 30%;
+      margin-left: 10%;
+      padding: 60px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    /* FAQ Section - card layout with inverted colors */
+    .faq-section {
+      background-color: #ffffff;
+      color: #121212;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .faq-section h2 {
+      text-align: center;
+      margin: 0 0 20px;
+      font-size: 2.5rem;
+    }
+    .faq-item {
+      background-color: #f9f9f9;
+      color: #121212;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .faq-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    .faq-question {
+      font-size: 1.5rem;
+      margin: 0 0 10px;
+      font-weight: bold;
+    }
+    .faq-answer {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.5;
+    }
+    /* Features Section - dark background with card layout */
+    .features-section {
+      background-color: #2a2a2a;
+      color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .features-section h2 {
+      text-align: center;
+      margin: 0 0 20px;
+      font-size: 2.5rem;
+    }
+    .feature-item {
+      background-color: #333333;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    }
+    .feature-title {
+      font-size: 1.5rem;
+      margin: 0 0 10px;
+      font-weight: bold;
+    }
+    .feature-description {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.5;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .text-container, .inner-box {
+        width: 90%;
+        margin-left: 5%;
+      }
+      .text-container h1 {
+        font-size: 8vw;
+      }
+      .text-container h3 {
+        font-size: 4vw;
+      }
+      .faq-section h2,
+      .features-section h2 {
+        font-size: 6vw;
+      }
+      .faq-question, .faq-answer,
+      .feature-title, .feature-description {
+        font-size: 4vw;
+      }
+      .divider {
+        height: 40px;
+      }
+      .section-container {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="media/icon.png" alt="Icon">
+    </div>
+    <nav class="nav-buttons">
+      <a href="#faq">FAQ</a>
+      <a href="#features">Features</a>
+      <a href="#contact-info">Contact Info</a>
+    </nav>
+    <div class="login-container">
+      <button class="login-button" onclick="window.location.href='/auth/discord'">Login with Discord</button>
+    </div>
+  </header>
+  
+  <!-- Offset for fixed header -->
+  <div class="header-offset"></div>
+  
+  <!-- Hero Section (Front Page) -->
+  <section class="hero">
+    <div class="text-container">
+      <h1>FCH Toolkit</h1>
+      <h3>Manage your community with ease</h3>
+    </div>
+  </section>
+  
+  <!-- FAQ Section Container -->
+  <section class="section-container">
+    <div class="divider"></div>
+    <div class="content-area fixed-bg faq-bg">
+      <div class="inner-box">
+        <div class="faq-section">
+          <h2 id="faq">FAQ</h2>
+          <!-- FAQ Item Template -->
+          <div class="faq-item">
+            <h3 class="faq-question">Q: What is FCH Toolkit?</h3>
+            <p class="faq-answer">A: FCH Toolkit is a web-based control panel designed to simplify VRChat community moderation and management.</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question">Q: Why use Toolkit?</h3>
+            <p class="faq-answer">A: Toolkit focuses on safety, efficiency, and ease-of-use. It offers a great UI, easy access, dedicated Discord/API integration, and does not require unsafe permissions.</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question">Q: What rules apply to my community?</h3>
+            <p class="faq-answer">A: There are no strict rules imposed—just common sense. Use the tool responsibly and do not employ it maliciously.</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question">Q: How do I add Toolkit to my group?</h3>
+            <p class="faq-answer">A: Your group must have over 200 users and pass a lightweight audit to ensure it's not malicious. Make an account and then contact me on Discord @ "lumi_vrc" to begin the process.</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question">Q: What does the moderator workflow look like?</h3>
+            <p class="faq-answer">A: It resembles workflows in similar tools: moderate a user, log evidence in an automatically opened thread, tag the case, then close the thread to save it to your group's database.</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question">Q: Can I view evidence logged in Toolkit as a group administrator?</h3>
+            <p class="faq-answer">A: Yes, Group Owners can designate other accounts as "Admins" to grant auditing permissions. Evidence, including videos, is visible as downloadable embeds on the website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </section>
+  
+  <!-- Features Section Container -->
+  <section class="section-container">
+    <div class="divider"></div>
+    <div class="content-area fixed-bg features-bg">
+      <div class="inner-box">
+        <div class="features-section">
+          <h2 id="features">Features</h2>
+          <!-- Feature Item Template -->
+          <div class="feature-item">
+            <h3 class="feature-title">VRChat / Discord Integration</h3>
+            <p class="feature-description">When a user is warned/kicked/banned, a thread is automatically opened in your Discord.</p>
+          </div>
+          <div class="feature-item">
+            <h3 class="feature-title">In-App Moderation Auditing</h3>
+            <p class="feature-description">View and sort moderation history for your group.</p>
+          </div>
+          <div class="feature-item">
+            <h3 class="feature-title">Embedded Evidence Viewing</h3>
+            <p class="feature-description">Open and display uploaded evidence for each moderation event in-app.</p>
+          </div>
+          <div class="feature-item">
+            <h3 class="feature-title">Enhanced Group Management</h3>
+            <p class="feature-description">Ban and Unban directly from the app! (Optional)</p>
+          </div>
+          <div class="feature-item">
+            <h3 class="feature-title">Moderator Activity Tracking</h3>
+            <p class="feature-description">Sort moderation events by moderator to help manage team activity.</p>
+          </div>
+          <div class="feature-item">
+            <h3 class="feature-title">Moderation Analytics</h3>
+            <p class="feature-description">Easy-to-understand data points about your group's moderation history.</p>
+          </div>
+          <div class="feature-item">
+            <h3 class="feature-title">Long-term Evidence Storage</h3>
+            <p class="feature-description">Evidence is stored via Amazon AWS S3 and moved to AWS Glacier after two months.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </section>
+  
+  <!-- Final Divider Bar -->
+  <div class="divider"></div>
+  
+  <!-- Footer (Contact Info) -->
+  <footer id="contact-info" style="background-color:#2a2a2a; padding:20px; text-align:center; color:#d3d3d3; font-size:1.2rem;">
+    Discord: @lumi_vrc
+  </footer>
+  
+  <!-- Additional sections (e.g., additional contact info) can be added below as needed -->
+</body>
+</html>
