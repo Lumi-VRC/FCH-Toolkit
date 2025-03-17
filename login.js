@@ -39,9 +39,9 @@ app.set('views', __dirname + '/views');
 // Note: Here, "discord id" refers to the unique tag that you want to store (the one stored in your SQL database).
 const pool = mysql.createPool({
     host: 'localhost',
-    user: 'FCHUser',           // Replace with your MySQL user
-    password: 'Hakukob1!',     // Your MySQL password
-    database: 'fch_toolkit',
+    user: 'Username',           // Replace with your MySQL user
+    password: 'Password',     // Your MySQL password
+    database: 'database_name',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
